@@ -1,0 +1,6 @@
+{
+  "name": "SIA ITMANV - Sistema Integrado Académico",
+  "description": "Sistema Integrado de Gestión Académica, Matrículas, Facturación Electrónica SUNAT y Portales para el Instituto de Educación Superior Tecnológico ITMANV.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,160 @@
+{
+  "entities": {
+    "Applicant": {
+      "title": "Applicant",
+      "description": "Postulante registrado en el proceso de admisión del IESTP ITMANV",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "fullName": { "type": "string" },
+        "docType": { "type": "string", "enum": ["DNI", "CE", "PASAPORTE"] },
+        "docNumber": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "careerId": { "type": "string" },
+        "modality": { 
+          "type": "string", 
+          "enum": [
+            "ORDINARIO", 
+            "PRIMEROS_PUESTOS", 
+            "DEPORTISTA_CALIFICADO", 
+            "DISCAPACIDAD_CONADIS", 
+            "TITULADO_GRADUADO", 
+            "TRASLADO_EXTERNO", 
+            "BECA_PRONABEC"
+          ] 
+        },
+        "period": { "type": "string" },
+        "status": { "type": "string", "enum": ["INSCRITO", "VALIDADO", "APROBADO", "OBSERVADO", "MATRICULADO"] },
+        "score": { "type": "number" },
+        "reviewedBy": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "fullName", "docType", "docNumber", "careerId", "modality", "status", "period"]
+    },
+    "Student": {
+      "title": "Student",
+      "description": "Ficha y registro de estudiante del instituto",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "studentCode": { "type": "string" },
+        "fullName": { "type": "string" },
+        "docType": { "type": "string", "enum": ["DNI", "CE"] },
+        "docNumber": { "type": "string" },
+        "careerId": { "type": "string" },
+        "currentCycle": { "type": "string" },
+        "turn": { "type": "string", "enum": ["MAÑANA", "TARDE", "NOCHE"] },
+        "status": { "type": "string", "enum": ["REGULAR", "CONDICIONAL", "EGRESADO", "RESERVADO"] },
+        "email": { "type": "string" },
+        "debtStatus": { "type": "string", "enum": ["AL_DIA", "MOROSO"] }
+      },
+      "required": ["id", "studentCode", "fullName", "docType", "docNumber", "careerId", "currentCycle", "status"]
+    },
+    "Enrollment": {
+      "title": "Enrollment",
+      "description": "Ficha oficial de matrícula por ciclo académico",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "studentId": { "type": "string" },
+        "period": { "type": "string" },
+        "careerId": { "type": "string" },
+        "cycle": { "type": "string" },
+        "courseIds": { "type": "array" },
+        "totalCredits": { "type": "number" },
+        "approvedBy": { "type": "string" },
+        "status": { "type": "string", "enum": ["BORRADOR", "VALIDADA", "DEFINITIVA"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "studentId", "period", "cycle", "courseIds", "status"]
+    },
+    "Grade": {
+      "title": "Grade",
+      "description": "Registro de notas bajo enfoque por competencias (MINEDU LAG)",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "studentId": { "type": "string" },
+        "courseId": { "type": "string" },
+        "period": { "type": "string" },
+        "il1": { "type": "number" },
+        "il2": { "type": "number" },
+        "il3": { "type": "number" },
+        "il4": { "type": "number" },
+        "recovery": { "type": "number" },
+        "finalGrade": { "type": "number" },
+        "attendancePercentage": { "type": "number" },
+        "status": { "type": "string", "enum": ["APROBADO", "DESAPROBADO", "DPI"] },
+        "updatedBy": { "type": "string" }
+      },
+      "required": ["id", "studentId", "courseId", "period", "finalGrade", "status"]
+    },
+    "TreasuryPayment": {
+      "title": "TreasuryPayment",
+      "description": "Obligaciones y pagos de cuotas/pensiones del estudiante",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "studentId": { "type": "string" },
+        "concept": { "type": "string" },
+        "dueDate": { "type": "string" },
+        "amount": { "type": "number" },
+        "lateFee": { "type": "number" },
+        "paidAmount": { "type": "number" },
+        "status": { "type": "string", "enum": ["PENDIENTE", "PAGADO", "VENCIDO"] },
+        "invoiceSeries": { "type": "string" },
+        "invoiceNumber": { "type": "string" }
+      },
+      "required": ["id", "studentId", "concept", "dueDate", "amount", "status"]
+    },
+    "SunatInvoice": {
+      "title": "SunatInvoice",
+      "description": "Comprobante electrónico SUNAT UBL 2.1 con validación en tiempo real",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "type": "string", "enum": ["03_BOLETA", "01_FACTURA"] },
+        "series": { "type": "string" },
+        "number": { "type": "string" },
+        "receiverDocType": { "type": "string" },
+        "receiverDocNumber": { "type": "string" },
+        "receiverName": { "type": "string" },
+        "subtotal": { "type": "number" },
+        "igv": { "type": "number" },
+        "total": { "type": "number" },
+        "hash": { "type": "string" },
+        "sunatResponseCode": { "type": "string" },
+        "sunatStatus": { "type": "string", "enum": ["ACEPTADO", "RECHAZADO"] },
+        "issuedAt": { "type": "string" }
+      },
+      "required": ["id", "type", "series", "number", "receiverDocNumber", "receiverName", "total", "hash", "sunatStatus"]
+    }
+  },
+  "firestore": {
+    "/applicants/{applicantId}": {
+      "schema": "Applicant",
+      "description": "Expedientes de postulantes al proceso de admisión"
+    },
+    "/students/{studentId}": {
+      "schema": "Student",
+      "description": "Directorio oficial de alumnos matriculados"
+    },
+    "/enrollments/{enrollmentId}": {
+      "schema": "Enrollment",
+      "description": "Fichas de matrícula de estudiantes por periodo académico"
+    },
+    "/grades/{gradeId}": {
+      "schema": "Grade",
+      "description": "Actas y notas por competencia MINEDU"
+    },
+    "/treasury_payments/{paymentId}": {
+      "schema": "TreasuryPayment",
+      "description": "Registro de cuentas corrientes y pensiones con morosidad"
+    },
+    "/sunat_invoices/{invoiceId}": {
+      "schema": "SunatInvoice",
+      "description": "Boletas y facturas electrónicas emitidas a SUNAT"
+    }
+  }
+}
