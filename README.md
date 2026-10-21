@@ -52,25 +52,26 @@ Si deseas configurar variables de entorno adicionales:
    ```
    *(En Windows CMD: `copy .env.example .env`)*
 
-### Paso 4: Iniciar el Servidor de Desarrollo Local
-Ejecuta:
+### Paso 4: Iniciar el Servidor de Desarrollo Local (Puerto 5173)
+Para ejecutar en **`localhost:5173`**, ejecuta:
 
 ```bash
-npm run dev
+npm run dev:5173
 ```
+*(O también: `npm run dev -- --port 5173` o `npx vite --port 5173`)*
 
-Verás un mensaje similar a:
+Verás en la terminal:
 ```
   VITE v6.x.x  ready in 300 ms
 
-  ➜  Local:   http://localhost:3000/
-  ➜  Network: http://0.0.0.0:3000/
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: http://0.0.0.0:5173/
 ```
 
 ### Paso 5: Abrir la Aplicación en tu Navegador
 Abre tu navegador web favorito (Google Chrome, Edge, Firefox, Brave) e ingresa a:
 
-👉 **[http://localhost:3000](http://localhost:3000)**
+👉 **[http://localhost:5173](http://localhost:5173)**
 
 ---
 
